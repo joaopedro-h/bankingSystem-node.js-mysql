@@ -3,7 +3,7 @@ class User {
         
         this.name = name;
         this.email = email;
-        this.passoword = password;
+        this.password = password;
         this.balance = balance;
 
     }
