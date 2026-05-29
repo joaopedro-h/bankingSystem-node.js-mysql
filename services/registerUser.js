@@ -5,13 +5,13 @@ const encryptPassword = require("../utils/encryptPassword");
 async function registerUser(rl,mainMenu,pause) {
     
     console.clear();
-    rl.question(`👤 - Insira o nome: `, async (userName) => {
+    rl.question(`👤 - Insira seu nome: `, async (userName) => {
 
-        rl.question(`📩 - Insira o email: `, async (email) => {
+        rl.question(`📩 - Insira seu email: `, async (email) => {
 
-            rl.question(`🔑 - Insira a senha: `, async (password) => {
+            rl.question(`🔑 - Insira sua senha: `, async (password) => {
 
-                rl.question(`💵 - Insira o saldo: `, async (balance) => {
+                rl.question(`💵 - Insira o saldo da conta: `, async (balance) => {
 
                     const encryptedPassword = await encryptPassword(password);
 
