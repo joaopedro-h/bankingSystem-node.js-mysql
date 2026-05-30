@@ -48,9 +48,9 @@ async function mainMenu() {
     });
 }
 
+async function bankingMenu(user) {
 
-async function bankingMenu() {
-
+    console.clear();
     console.log("1. Consultar saldo 💰");
     console.log("2. Depositar 📥");
     console.log("3. Sacar 📥");
@@ -64,11 +64,11 @@ async function bankingMenu() {
 
         switch (option) {
             case 1:
-                checkBalance();
+                checkBalance(user,rl,bankingMenu,pause);
                 break;
             
             case 2:
-                deposit();
+                deposit(user,rl,bankingMenu,pause);
                 break;
 
             case 3:
@@ -85,7 +85,7 @@ async function bankingMenu() {
 
             case 0:
                 console.log("Saindo.. ❌");
-                rl.close();
+                mainMenu();
                 break;
         
             default:

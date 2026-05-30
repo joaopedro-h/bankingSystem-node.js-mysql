@@ -1,5 +1,6 @@
 const connection = require("../database/connection");
 const decryptPassword = require("../utils/decryptPassword");
+const time = require("../utils/awaitTime");
 
 async function login(rl,mainMenu,bankingMenu,pause) {
     
@@ -12,6 +13,7 @@ async function login(rl,mainMenu,bankingMenu,pause) {
 
             const sqlLogin =
             `SELECT 
+             id,
              user_name,
              email,
              password,
@@ -31,11 +33,14 @@ async function login(rl,mainMenu,bankingMenu,pause) {
             const decryptedPassword = await decryptPassword(password,user);
 
             if (decryptedPassword) {
-                console.log("\nLogado com sucesso! ✅");
 
-                bankingMenu();
+                console.clear();
+                console.log("Logado com sucesso! ✅");
+                await time();
+                bankingMenu(user);
                 
             }else{
+                
                 console.log("\nSenha incorreta! 🔑");
             
             }
