@@ -1,7 +1,10 @@
 const connection = require("../database/connection");
 const decryptPassword = require("../utils/decryptPassword");
 
-async function login(rl,mainMenu,pause) {
+async function login(rl,mainMenu,bankingMenu,pause) {
+    
+    console.clear();
+    console.log("LOGIN DE USUÁRIO 💾\n");
     
     rl.question(`📩 - Insira seu email: `, (email) => {
 
@@ -29,6 +32,8 @@ async function login(rl,mainMenu,pause) {
 
             if (decryptedPassword) {
                 console.log("\nLogado com sucesso! ✅");
+
+                bankingMenu();
                 
             }else{
                 console.log("\nSenha incorreta! 🔑");

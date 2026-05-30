@@ -7,6 +7,11 @@ const rl = readline.createInterface({
 
 const registerUser = require("./services/registerUser");
 const login = require("./services/login");
+const checkBalance = require("./services/checkBalance");
+const deposit = require("./services/deposit");
+const withdraw = require("./services/withdraw");
+const tranferBalance = require("./services/tranferBalance");
+const accountHistory = require("./services/accountHistory");
 const pause = require("./services/pause");
 
 async function mainMenu() {
@@ -26,16 +31,16 @@ async function mainMenu() {
                 break;
             
             case 2:
-                login(rl,mainMenu,pause);
+                login(rl,mainMenu,bankingMenu,pause);
                 break;
 
             case 0:
-                console.log("Saindo..");
+                console.log("Saindo.. ❌");
                 rl.close();
                 break;
 
             default:
-                console.log("Opção inválida!");
+                console.log("Opção inválida! 🚫");
                 mainMenu();
                 break;
         }
@@ -44,12 +49,52 @@ async function mainMenu() {
 }
 
 
-
 async function bankingMenu() {
 
+    console.log("1. Consultar saldo 💰");
+    console.log("2. Depositar 📥");
+    console.log("3. Sacar 📥");
+    console.log("4. Transferir 🔄");
+    console.log("5. Histórico 📋");
+    console.log("0. Sair ❌\n");
+    
+    rl.question(`Selecione a opção que deseja: `, (option) => {
 
+        option = Number(option);
 
+        switch (option) {
+            case 1:
+                checkBalance();
+                break;
+            
+            case 2:
+                deposit();
+                break;
 
+            case 3:
+                withdraw();
+                break;
+
+            case 4:
+                tranferBalance();
+                break;
+
+            case 5:
+                accountHistory();
+                break;
+
+            case 0:
+                console.log("Saindo.. ❌");
+                rl.close();
+                break;
+        
+            default:
+                console.log("Opção inválida! 🚫");
+                bankingMenu();
+                break;
+        }
+
+    });    
 }
 
 
