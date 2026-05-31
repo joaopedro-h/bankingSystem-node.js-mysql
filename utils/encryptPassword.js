@@ -2,10 +2,10 @@ const bcrypt = require('bcrypt');
 
 async function encryptPassword(password) {
     
-    const salt = 10;
-    const hashPassword = await bcrypt.hash(password,salt);
+    const saltRounds = 10; /* Define a quantidade de rodadas utilizadas na criptografia. */
+    const hashPassword = await bcrypt.hash(password,saltRounds); /* Criptografa a senha utilizando bcrypt. */
 
-    return hashPassword;
+    return hashPassword; /* Retorna a senha criptografada. */
 
 }
 
