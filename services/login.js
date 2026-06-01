@@ -36,6 +36,7 @@ async function login(rl,mainMenu,bankingMenu,pause) {
 
                 console.clear();
                 console.log("Logado com sucesso! ✅");
+                console.log("🆔 = ", user.id); /* Exibe o ID da conta assim que é feito o login. */
                 await time(); /* Aguarda 2 segundos antes de abrir o menu bancário. */
                 bankingMenu(user); /* Envia os dados do usuário logado para o menu bancário. */
                 

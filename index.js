@@ -72,7 +72,7 @@ async function bankingMenu(user) {
                 break;
 
             case 3:
-                withdraw();
+                withdraw(user,rl,bankingMenu,pause);
                 break;
 
             case 4:
@@ -80,7 +80,7 @@ async function bankingMenu(user) {
                 break;
 
             case 5:
-                accountHistory();
+                accountHistory(user,rl,bankingMenu,pause);
                 break;
 
             case 0:
