@@ -10,7 +10,7 @@ const login = require("./services/login");
 const checkBalance = require("./services/checkBalance");
 const deposit = require("./services/deposit");
 const withdraw = require("./services/withdraw");
-const tranferBalance = require("./services/tranferBalance");
+const transferBalance = require("./services/transferBalance");
 const accountHistory = require("./services/accountHistory");
 const pause = require("./services/pause");
 
@@ -21,7 +21,7 @@ async function mainMenu() {
     console.log("2. Fazer login. 👤");
     console.log("0. Sair ❌\n");
     
-    rl.question(`Selecione a opção que deseja: `, (option) => {
+    rl.question(`📌 - Selecione a opção que deseja: `, (option) => {
 
         option = Number(option);
 
@@ -58,13 +58,13 @@ async function bankingMenu(user) {
     console.log("5. Histórico 📋");
     console.log("0. Sair ❌\n");
     
-    rl.question(`Selecione a opção que deseja: `, (option) => {
+    rl.question(`📌 - Selecione a opção que deseja: `, (option) => {
 
         option = Number(option);
 
         switch (option) {
             case 1:
-                checkBalance(user,rl,bankingMenu,pause);
+                checkBalance(user,rl,bankingMenu,pause);                
                 break;
             
             case 2:
@@ -76,7 +76,7 @@ async function bankingMenu(user) {
                 break;
 
             case 4:
-                tranferBalance();
+                transferBalance(user,rl,bankingMenu,pause);
                 break;
 
             case 5:
@@ -96,6 +96,5 @@ async function bankingMenu(user) {
 
     });    
 }
-
 
 mainMenu();

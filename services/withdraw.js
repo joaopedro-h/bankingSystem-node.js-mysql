@@ -13,6 +13,20 @@ async function withdraw(user,rl,bankingMenu,pause) {
             return;
         }
 
+        const sqlUserBalance = /* Cria a query para realizar a consulta do saldo diretamente no banco. */
+        `SELECT 
+         balance
+         FROM users
+        WHERE id = ?`;
+
+        const [resultBalance] = await connection.execute(sqlUserBalance,[user.id]);  /* Executa e armazena os rows em resultBalance, ignorando os fields retornados pelo MySQL. */
+
+        if (withdrawAmount > resultBalance[0].balance) {  /* Verifica se o valor disponível na conta é suficiente para o saque. */
+            console.log("Saldo insuficiente na conta! 🚫");
+            pause(rl, () => bankingMenu(user));
+            return;            
+        }
+
         const sqlWithdraw = /* Cria a query para realizar o saque. */
         `UPDATE users
          SET balance = balance - ?
@@ -27,24 +41,19 @@ async function withdraw(user,rl,bankingMenu,pause) {
 
         const sqlTransaction = /* Cria a query para registrar a transação no histórico. */
         `INSERT INTO transactions (type,value,user_origin_id)
-        VALUES ("Depósito",?,?)`;
+        VALUES ("Saque",?,?)`;
 
         const valuesTransaction = [ /* Valores que substituirão os "?" da query. */
             withdrawAmount,
             user.id
         ];
 
-        await connection.execute(sqlTransaction,valuesTransaction); /* Executa a transação, trocando as "?" por "depositAmount" e "user.id". */
+        await connection.execute(sqlTransaction,valuesTransaction); /* Executa a transação, trocando as "?" por "withdrawAmount" e "user.id". */
 
-        const sqlUpdated = /* Cria a query para atualizar o valor da conta. */
-        `SELECT
-         balance
-        FROM users
-        WHERE id = ?`;
-
-        const [result] = await connection.execute(sqlUpdated, [user.id]); /* Executa e armazena os rows em result, ignorando os fields retornados pelo MySQL. */
+        /* Executa a query novamente para atualizar o saldo, conferindo diretamente no banco de dados. */
+        const [updatedBalance] = await connection.execute(sqlUserBalance, [user.id]); /* Executa e armazena os rows em "updatedBalance", ignorando os fields retornados pelo MySQL. */
         
-        console.log(`Saldo após saque: R$${result[0].balance} 💰`); /* "result[0]" pega o primeiro registro encontrado. */
+        console.log(`Saldo após saque: R$${updatedBalance[0].balance} 💰`); /* "result[0]" pega o primeiro registro encontrado. */
         
         pause(rl, () => bankingMenu(user));
 
