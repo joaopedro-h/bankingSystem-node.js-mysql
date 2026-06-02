@@ -4,17 +4,25 @@ const time = require("../utils/awaitTime");
 async function transferBalance(user,rl,bankingMenu,pause) {
     
     console.clear();
-    rl.question(`\n🆔 - Informe o ID da conta que deseja fazer o depósito: `, async (idAccountDeposit) => {
+    rl.question(`\n🆔 - Informe o ID da conta destino: `, async (idAccountDeposit) => {
+
+        idAccountDeposit = Number(idAccountDeposit);
 
         const sqlCheckUser =
-        `SELECT * FROM
-         users
+        `SELECT
+         id
+         FROM users
         WHERE id = ?`;
 
         const [result] = await connection.execute(sqlCheckUser,[idAccountDeposit]);
 
         if (result.length === 0) {  /* Verifica se existe algum usuário cadastrado com o email informado. */
             console.log("\nNenhum usuário encontrado! ❌");
+            pause(rl, () => bankingMenu(user));
+            return;      
+
+        }else if (idAccountDeposit === user.id) {
+            console.log("\nNão é possível transferir para sua própria conta! ❌");
             pause(rl, () => bankingMenu(user));
             return;                
         }
@@ -66,6 +74,19 @@ async function transferBalance(user,rl,bankingMenu,pause) {
            ];
 
            await connection.execute(sqlDiscount,valuesDiscount);
+
+           const sqlTransaction = 
+           `INSERT INTO transactions (type,value,user_origin_id,user_destination_id)
+            VALUES ("Transferência",?,?,?)`;        
+
+           const valuesTransaction = [
+                transferValue,
+                user.id,
+                idAccountDeposit
+           ];
+
+           await connection.execute(sqlTransaction,valuesTransaction);
+
            const [updatedBalance] = await connection.execute(sqlCheckBalance,[user.id]);
 
            console.clear();
