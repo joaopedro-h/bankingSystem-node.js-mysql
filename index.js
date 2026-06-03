@@ -86,7 +86,7 @@ async function bankingMenu(user) {
                 break;
 
             case 6:
-                editProfile(user,rl,bankingMenu,pause);
+                editProfile(user,rl,bankingMenu,editProfile,pause);
                 break;
 
             case 0:
