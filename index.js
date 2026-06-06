@@ -13,6 +13,7 @@ const withdraw = require("./services/withdraw");
 const transferBalance = require("./services/transferBalance");
 const accountHistory = require("./services/accountHistory");
 const editProfile = require("./services/editProfile")
+const closeAccount = require("./services/closeAccount");
 const pause = require("./services/pause");
 
 async function mainMenu() {
@@ -58,6 +59,7 @@ async function bankingMenu(user) {
     console.log("4. Transferir 🔄");
     console.log("5. Histórico 📋");
     console.log("6. Editar perfil ✏️");
+    console.log("7. Fechar conta 🚫");
     console.log("0. Sair ❌\n");
     
     rl.question(`📌 - Selecione a opção que deseja: `, (option) => {
@@ -87,6 +89,10 @@ async function bankingMenu(user) {
 
             case 6:
                 editProfile(user,rl,bankingMenu,editProfile,pause);
+                break;
+
+            case 7:
+                closeAccount(user,rl,bankingMenu,pause);
                 break;
 
             case 0:
