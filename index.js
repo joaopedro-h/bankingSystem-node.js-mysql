@@ -92,7 +92,7 @@ async function bankingMenu(user) {
                 break;
 
             case 7:
-                closeAccount(user,rl,bankingMenu,pause);
+                closeAccount(user,rl,bankingMenu,mainMenu,pause);
                 break;
 
             case 0:

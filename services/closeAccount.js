@@ -2,7 +2,7 @@ const connection = require("../database/connection");
 const decryptPassword = require("../utils/decryptPassword");
 const time = require("../utils/awaitTime");
 
-async function closeAccount(user,rl,bankingMenu,pause) {
+async function closeAccount(user,rl,bankingMenu,mainMenu,pause) {
     
     console.clear();
     console.log("FECHAMENTO DE CONTA ❌\n");
@@ -45,7 +45,7 @@ async function closeAccount(user,rl,bankingMenu,pause) {
         console.log("Conta fechada com sucesso. ✅");
         console.log(`💰 - Valor disponível para sacar: ${balance}.`) /* Exibe o saldo que estava disponível na conta antes do encerramento. */
         
-        pause(rl, () => bankingMenu(user));
+        pause(rl, () => mainMenu(user));
 
     });
     
