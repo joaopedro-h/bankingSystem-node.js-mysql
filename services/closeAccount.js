@@ -5,6 +5,8 @@ const time = require("../utils/awaitTime");
 async function closeAccount(user,rl,bankingMenu,pause) {
     
     console.clear();
+    console.log("FECHAMENTO DE CONTA ❌\n");
+
     rl.question(`🔑 - Insira a senha da conta para encerramento: `, async (passwordEntered) => { /* "passwordEntered" recebe a senha digitada pelo usuário. */
 
         const sqlCheckPassword = /* Cria a query para consultar a senha e o saldo da conta diretamente no banco. */

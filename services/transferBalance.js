@@ -4,6 +4,8 @@ const time = require("../utils/awaitTime");
 async function transferBalance(user,rl,bankingMenu,pause) {
     
     console.clear();
+    console.log("TRANSFERÊNCIA BANCÁRIA 🔄\n");
+    
     rl.question(`\n🆔 - Informe o ID da conta destino: `, async (idAccountDeposit) => {  /* "idAccountDeposit" recebe o ID da conta que irá receber a transferência. */
 
         idAccountDeposit = Number(idAccountDeposit);  /* Converte a string em número. */

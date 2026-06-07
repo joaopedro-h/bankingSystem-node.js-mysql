@@ -4,6 +4,8 @@ const time = require("../utils/awaitTime");
 async function withdraw(user,rl,bankingMenu,pause) {
     
     console.clear();
+    console.log("SAQUE ➖\n");
+
     rl.question(`Insira o valor do saque: `, async (withdrawAmount) => { /* "withdrawAmount" recebe o valor do saque. */
 
         withdrawAmount = Number(withdrawAmount); /* Converte a string em número. */

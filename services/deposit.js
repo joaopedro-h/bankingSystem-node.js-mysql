@@ -4,7 +4,9 @@ const time = require("../utils/awaitTime");
 async function deposit(user,rl,bankingMenu,pause) {
     
     console.clear();
-    rl.question(`Insira o valor do deposíto: `, async (depositAmount) => { /* "depositAmount" recebe o valor do depósito. */
+    console.log("DEPÓSITO ➕\n");
+    
+    rl.question(`Insira o valor do depósito: `, async (depositAmount) => { /* "depositAmount" recebe o valor do depósito. */
 
         depositAmount = Number(depositAmount); /* Converte a string em número. */
 
