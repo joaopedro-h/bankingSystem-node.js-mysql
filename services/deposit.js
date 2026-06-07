@@ -1,4 +1,5 @@
 const connection = require("../database/connection");
+const time = require("../utils/awaitTime");
 
 async function deposit(user,rl,bankingMenu,pause) {
     
@@ -44,6 +45,11 @@ async function deposit(user,rl,bankingMenu,pause) {
 
         const [result] = await connection.execute(sqlUpdated, [user.id]); /* Executa e armazena os rows em result, ignorando os fields retornados pelo MySQL. */
         
+        console.clear();
+        console.log("Processando.. ⏳");
+        await time();  /* Aguarda 2 segundos antes de exibir o resultado. */
+        console.clear();
+        console.log("Depósito realizado com sucesso! ✅");
         console.log(`Saldo após depósito: R$${result[0].balance} 💰`); /* "result[0]" pega o primeiro registro encontrado. */
         
         pause(rl, () => bankingMenu(user));

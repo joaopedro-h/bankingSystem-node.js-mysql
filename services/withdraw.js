@@ -1,4 +1,5 @@
 const connection = require("../database/connection");
+const time = require("../utils/awaitTime");
 
 async function withdraw(user,rl,bankingMenu,pause) {
     
@@ -52,7 +53,12 @@ async function withdraw(user,rl,bankingMenu,pause) {
 
         /* Executa a query novamente para atualizar o saldo, conferindo diretamente no banco de dados. */
         const [updatedBalance] = await connection.execute(sqlUserBalance, [user.id]); /* Executa e armazena os rows em "updatedBalance", ignorando os fields retornados pelo MySQL. */
-        
+
+        console.clear();
+        console.log("Processando.. ⏳");
+        await time();  /* Aguarda 2 segundos antes de exibir o resultado. */
+        console.clear();        
+        console.log("Saque realizado com sucesso! ✅");
         console.log(`Saldo após saque: R$${updatedBalance[0].balance} 💰`); /* "result[0]" pega o primeiro registro encontrado. */
         
         pause(rl, () => bankingMenu(user));
