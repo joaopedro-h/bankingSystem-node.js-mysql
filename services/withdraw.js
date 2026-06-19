@@ -43,11 +43,12 @@ async function withdraw(user,rl,bankingMenu,pause) {
         await connection.execute(sqlWithdraw,valuesWithdraw); /* Executa o saque, trocando as "?" por "withdrawAmount" e "user.id". */
 
         const sqlTransaction = /* Cria a query para registrar a transação no histórico. */
-        `INSERT INTO transactions (type,value,user_origin_id)
-        VALUES ("Saque",?,?)`;
+        `INSERT INTO transactions (type,value,user_origin_id,user_destination_id)
+        VALUES ("Saque",?,?,?)`;
 
         const valuesTransaction = [ /* Valores que substituirão os "?" da query. */
             withdrawAmount,
+            user.id,
             user.id
         ];
 

@@ -29,11 +29,12 @@ async function deposit(user,rl,bankingMenu,pause) {
         await connection.execute(sqlDeposit,valuesDeposit); /* Executa o depósito, trocando as "?" por "depositAmount" e "user.id". */
 
         const sqlTransaction = /* Cria a query para registrar a transação no histórico. */
-        `INSERT INTO transactions (type,value,user_origin_id)
-        VALUES ("Depósito",?,?)`;
+        `INSERT INTO transactions (type,value,user_origin_id,user_destination_id)
+        VALUES ("Depósito",?,?,?)`;
 
         const valuesTransaction = [ /* Valores que substituirão os "?" da query. */
             depositAmount,
+            user.id,
             user.id
         ];
 
