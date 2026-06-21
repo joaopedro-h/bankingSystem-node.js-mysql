@@ -28,26 +28,35 @@ async function registerUser(rl,mainMenu,pause) {
 
             rl.question(`🔑 - Insira sua senha: `, async (password) => {  /* "password" recebe a senha inserida. */
 
-                rl.question(`💵 - Insira o saldo da conta: `, async (balance) => {  /* "balance" recebe o saldo inicial da conta. */
+                rl.question(`🔑 - Confirme a senha: `, async (passwordConfirmed) => {
 
-                    if (isNaN(balance)) {
-                        console.log("\nInsira um valor válido! 🚫");
+                    if (password != passwordConfirmed) {  /* Se a senha confirmada não for igual a primeira senha digitada, o usuário é retornado ao menu. */
+                        console.log("\nSenha errada! 🚫");
                         pause(rl, mainMenu);
-                        return;                        
+                        return;  
                     }
 
-                    const encryptedPassword = await encryptPassword(password); /* Criptografa a senha informada pelo usuário. */
+                    rl.question(`💵 - Insira o saldo da conta: `, async (balance) => {  /* "balance" recebe o saldo inicial da conta. */
 
-                    const user = new User( /* Cria um novo objeto da classe User. */
-                        userName,
-                        email,
-                        encryptedPassword,
-                        balance
-                    );
+                        if (isNaN(balance) || balance <= 0) {  /* Se o saldo não for número ou for menor/igual que 0 o usuário é retornado ao menu. */
+                            console.log("\nInsira um valor válido! 🚫");
+                            pause(rl, mainMenu);
+                            return;                        
+                        }
 
-                    await saveUser(user,rl,mainMenu,pause); /* Envia o objeto "user" para ser salvo no banco de dados. */
+                        const encryptedPassword = await encryptPassword(password); /* Criptografa a senha informada pelo usuário. */
 
-                });
+                        const user = new User( /* Cria um novo objeto da classe User. */
+                            userName,
+                            email,
+                            encryptedPassword,
+                            balance
+                        );
+
+                        await saveUser(user,rl,mainMenu,pause); /* Envia o objeto "user" para ser salvo no banco de dados. */
+
+                    });
+                });    
             });
         });
     });

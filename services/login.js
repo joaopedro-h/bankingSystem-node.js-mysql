@@ -7,7 +7,7 @@ async function login(rl,mainMenu,bankingMenu,pause) {
     console.clear();
     console.log("LOGIN DE USUÁRIO 💾\n");
     
-    rl.question(`📩 - Insira seu email: `, (email) => {  /* "email" recebe o email inserido. */
+    rl.question(`📩 - Insira seu email: `, async (email) => {  /* "email" recebe o email inserido. */
 
         rl.question(`🔑 - Insira sua senha: `, async (password) => {  /* "password" recebe a senha inserida. */
 

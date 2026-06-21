@@ -53,6 +53,7 @@ async function mainMenu() {
 async function bankingMenu(user) {
 
     console.clear();
+    console.log(`Olá, ${user.user_name} 😄\n`);
     console.log("1. Consultar saldo 💰");
     console.log("2. Depositar 📥");
     console.log("3. Sacar 📥");
