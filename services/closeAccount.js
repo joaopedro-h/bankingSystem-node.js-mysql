@@ -30,6 +30,12 @@ async function closeAccount(user,rl,bankingMenu,mainMenu,pause) {
             return;               
         }
 
+        const sqlDeleteTransaction =
+        `DELETE FROM transactions
+        WHERE user_origin_id = ? OR user_destination_id = ?;`
+
+        await connection.execute(sqlDeleteTransaction, [user.id,user.id]); /* Executa a exclusão da conta. */
+
         const sqlDeleteAccount = /* Cria a query para excluir a conta do banco de dados. */
         `DELETE FROM users
         WHERE id = ?`;
