@@ -30,14 +30,36 @@ async function closeAccount(user,rl,bankingMenu,mainMenu,pause) {
             return;               
         }
 
-        const sqlDeletAccount = /* Cria a query para fechar a conta do usuário. */
+        const sqlDeletTransactions = /* Cria a query para deletar as transações do usuário. */
         `DELETE FROM transactions
-         WHERE user_origin_id = ? OR user_destination_id = ?;
+        WHERE user_origin_id = ? OR user_destination_id = ?;`
 
-         DELETE FROM users
-        WHERE id = ?;`;
+        const sqlDeleteAccount = /* Cria a query para fechar a conta do usuário. */
+        `DELETE FROM users
+        WHERE id = ?;`
+        
+        const conn = await connection.getConnection();
 
-        await connection.query(sqlDeletAccount, [user.id, user.id, user.id]); /* Executa o fechamento a conta. */
+        try {  /* Tenta executar todas as operações da transferência. */
+            
+            await conn.beginTransaction();  /* Inicia uma transação no banco de dados. Nenhuma alteração será salva definitivamente até o commit. */
+
+            await conn.execute(sqlDeletTransactions,[user.id,user.id]);  /* Executa a query, deletando as transações do usuário. */
+            await conn.execute(sqlDeleteAccount,[user.id]);  /* Executa a query, fechando a conta do usuário. */
+
+            await conn.commit();  /* Confirma todas as alterações realizadas durante a transação. */
+
+        } catch (error) {  /* Captura qualquer erro ocorrido durante a transação. */
+            
+            console.log("Erro no encerramento da conta! 🚫");
+            await conn.rollback();  /* Cancela todas as alterações realizadas desde o beginTransaction. */
+            pause(rl, () => bankingMenu(user));
+            return;             
+
+        } finally {
+
+            connection.release();
+        }
         
         console.clear();
         console.log("Processando.. ⏳");

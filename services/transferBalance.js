@@ -87,24 +87,24 @@ async function transferBalance(user,rl,bankingMenu,pause) {
 
            try {  /* Tenta executar todas as operações da transferência. */
             
-                await conn.beginTransaction();  /* Inicia uma transação no banco de dados. Nenhuma alteração será salva definitivamente até o commit. */
+               await conn.beginTransaction();  /* Inicia uma transação no banco de dados. Nenhuma alteração será salva definitivamente até o commit. */
 
-                await conn.execute(sqlTransferValue,valuesTransfer);  /* Executa a transferência para a conta destino. */
-                await conn.execute(sqlDiscount,valuesDiscount);  /* Executa o desconto na conta de origem. */
-                await conn.execute(sqlTransaction,valuesTransaction);  /* Executa o registro da transação no banco de dados. */
+               await conn.execute(sqlTransferValue,valuesTransfer);  /* Executa a transferência para a conta destino. */
+               await conn.execute(sqlDiscount,valuesDiscount);  /* Executa o desconto na conta de origem. */
+               await conn.execute(sqlTransaction,valuesTransaction);  /* Executa o registro da transação no banco de dados. */
 
-                await conn.commit();  /* Confirma todas as alterações realizadas durante a transação. */
+               await conn.commit();  /* Confirma todas as alterações realizadas durante a transação. */
             
            } catch (error) {  /* Captura qualquer erro ocorrido durante a transação. */
 
-                console.log("Erro na transação! 🚫");
-                await conn.rollback();  /* Cancela todas as alterações realizadas desde o beginTransaction. */
-                pause(rl, () => bankingMenu(user));
-                return;  
+               console.log("Erro na transação! 🚫");
+               await conn.rollback();  /* Cancela todas as alterações realizadas desde o beginTransaction. */
+               pause(rl, () => bankingMenu(user));
+               return;  
 
            } finally {
 
-                conn.release();
+               conn.release();
            }
 
            const [updatedBalance] = await connection.execute(sqlCheckBalance,[user.id]);  /* Executa a consulta novamente para obter o saldo atualizado da conta. */
