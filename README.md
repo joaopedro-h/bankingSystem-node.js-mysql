@@ -33,6 +33,9 @@ Projeto desenvolvido de forma autoral para fins de estudo e prática de desenvol
 - 📤 Saque de valores
 - 🔄 Transferência entre contas
 - 📋 Histórico de transações
+- 🔗 Relacionamento entre tabelas com Foreign Keys
+- 🔄 Controle de transações com Commit e Rollback
+- ⚠️ Tratamento de erros com Try/Catch
 - ✏️ Alteração de nome
 - 📩 Alteração de email
 - 🔑 Alteração de senha
@@ -277,6 +280,11 @@ O sistema utiliza:
 - Validação de saldo
 - Validação de identidade do usuário
 - Validação de operações financeiras
+- Foreign Keys para garantir integridade relacional
+- Transações MySQL com beginTransaction()
+- Confirmação de operações com commit()
+- Reversão automática de falhas com rollback()
+- Tratamento de exceções utilizando try/catch
 
 ---
 
@@ -373,6 +381,15 @@ project/
 - Histórico de transações
 - Persistência de dados
 - Pool de conexões MySQL
+- Relacionamentos entre tabelas
+- Foreign Keys
+- INNER JOIN
+- LEFT JOIN
+- Controle de transações
+- Commit e Rollback
+- Tratamento de erros com Try/Catch
+
+---
 
 ---
 
@@ -384,6 +401,12 @@ INSERT
 UPDATE
 DELETE
 WHERE
+INNER JOIN
+LEFT JOIN
+FOREIGN KEY 
+ALTER TABLE 
+ADD CONSTRAINT 
+REFERENCES
 ```
 
 ---
@@ -465,6 +488,22 @@ CREATE TABLE transactions (
 
 ---
 
+## Crie as Foreign Keys
+
+```sql
+ALTER TABLE transactions
+ADD CONSTRAINT fk_origin
+FOREIGN KEY (user_origin_id)
+REFERENCES users(id);
+
+ALTER TABLE transactions
+ADD CONSTRAINT fk_destination
+FOREIGN KEY (user_destination_id)
+REFERENCES users(id);
+```
+
+---
+
 # 🔌 Configure a conexão
 
 No arquivo:
@@ -507,5 +546,10 @@ Este projeto foi desenvolvido como prática de:
 - Segurança de aplicações
 - Persistência de dados
 - Manipulação de transações bancárias
+- Relacionamentos entre tabelas
+- Integridade referencial com Foreign Keys
+- Consultas utilizando JOINs
+- Controle de transações com Commit e Rollback
+- Tratamento de erros em aplicações backend
 
 ---
